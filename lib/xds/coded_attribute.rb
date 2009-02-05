@@ -1,6 +1,6 @@
 module XDS
   class CodedAttribute
-
+  include XDS::Helper
     attr_accessor :code, :display_name, :coding_scheme
     attr_reader :classification_scheme
   
@@ -23,25 +23,35 @@ module XDS
   
     def create_classification(object_id)
       classification = ClassificationType.new
-      classification.setClassificationScheme(@classification_scheme)
-      classification.setClassifiedObject(object_id)
-      classification.setNodeRepresentation(@code)
+      
+      classification.setClassificationScheme(to_reference_uri(@classification_scheme))
+      classification.setClassifiedObject(to_reference_uri(object_id))
+      classification.setNodeRepresentation(to_reference_uri(@code)) if @code
     
       ist = InternationalStringType.new
       lst = LocalizedStringType.new
-      lst.setValue(@display_name)
-      ist.getLocalizedString().add(lst)
+      fft = FreeFormText.new
+      fft.setFreeFormText(@display_name)
+      lst.setValue(fft)
+      
+      ists = InternationalStringTypeSequence.new
+      ists.setLocalizedString(lst)
+      ist.addInternationalStringTypeSequence(ists)
 
       classification.setName(ist)
     
       st = SlotType1.new
-      st.setName("codingScheme")
+      st.setName(to_long_name("codingScheme"))
       vlt = ValueListType.new
-      vlt.getValue().add(@coding_scheme)
+      vlts = ValueListTypeSequence.new
+      vlts.setValue(to_long_name(@coding_scheme)) if @coding_scheme
+      vlt.addValueListTypeSequence(vlts)
       st.setValueList(vlt)
-      classification.getSlot().add(st)
+      classification.addSlot(st)
     
       classification
     end
+    
+
   end
 end

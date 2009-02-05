@@ -1,5 +1,6 @@
 module XDS
   class Metadata
+    include XDS::Helper
     attr_accessor :author
     attr_accessor :availability_status
     attr_accessor :class_code
@@ -23,40 +24,40 @@ module XDS
       object_id = 'the_document'
       rol = RegistryObjectListType.new
     
-      rol.getIdentifiable().add(@author.create_classification(object_id))
-      rol.getIdentifiable().add(@class_code.create_classification(object_id))
-      rol.getIdentifiable().add(@confidentiality_code.create_classification(object_id))
+      rol.addIdentifiable(@author.create_classification(object_id))
+      rol.addIdentifiable(@class_code.create_classification(object_id))
+      rol.addIdentifiable(@confidentiality_code.create_classification(object_id))
     
-      rol.getIdentifiable().add(create_identifiable_type('creationTime', creation_time.strftime('%Y%m%d')))
+      rol.addIdentifiable(create_identifiable_type('creationTime', creation_time.strftime('%Y%m%d')))
     
-      rol.getIdentifiable().add(@format_code.create_classification(object_id))
-      rol.getIdentifiable().add(@healthcare_facility_type_code.create_classification(object_id))
-      rol.getIdentifiable().add(create_identifiable_type('languageCode', @language_code))
+      rol.addIdentifiable(@format_code.create_classification(object_id))
+      rol.addIdentifiable(@healthcare_facility_type_code.create_classification(object_id))
+      rol.addIdentifiable(create_identifiable_type('languageCode', @language_code))
     
       eo = ExtrinsicObjectType.new
-      eo.setMimeType(@mime_type)
-      eo.setId(object_id)
-      rol.getIdentifiable().add(eo)
+      eo.setMimeType(to_long_name(@mime_type))
+      eo.setId(to_axis_uri(object_id))
+      rol.addIdentifiable(eo)
     
-      rol.getIdentifiable().add(create_external_identifier(:patient_id))
+      rol.addIdentifiable(create_external_identifier(:patient_id))
     
-      rol.getIdentifiable().add(@practice_setting_code.create_classification(object_id))
+      rol.addIdentifiable(@practice_setting_code.create_classification(object_id))
     
       if @service_start_time
-        rol.getIdentifiable().add(create_identifiable_type('serviceStartTime', service_start_time.strftime('%Y%m%d')))
+        rol.addIdentifiable(create_identifiable_type('serviceStartTime', service_start_time.strftime('%Y%m%d')))
       end
 
       if @service_stop_time
-        rol.getIdentifiable().add(create_identifiable_type('serviceStopTime', service_stop_time.strftime('%Y%m%d')))
+        rol.addIdentifiable(create_identifiable_type('serviceStopTime', service_stop_time.strftime('%Y%m%d')))
       end
     
-      rol.getIdentifiable().add(create_identifiable_type('sourcePatientId', source_patient_id))
+      rol.addIdentifiable(create_identifiable_type('sourcePatientId', source_patient_id))
     
-      rol.getIdentifiable().add(@source_patient_info.create_identifiable_type)
+      rol.addIdentifiable(@source_patient_info.create_identifiable_type)
     
-      rol.getIdentifiable().add(@type_code.create_classification(object_id))
+      rol.addIdentifiable(@type_code.create_classification(object_id))
     
-      rol.getIdentifiable().add(create_external_identifier(:unique_id))
+      rol.addIdentifiable(create_external_identifier(:unique_id))
     
       rol
     end
@@ -64,11 +65,12 @@ module XDS
     def create_identifiable_type(slot_name, slot_value)
       it = IdentifiableType.new
       st = SlotType1.new
-      st.setName(slot_name)
+      st.setName(LongName::Factory.fromString(slot_name,nil))
       vlt = ValueListType.new
-      vlt.getValue().add(slot_value)
+      vlts = ValueListTypeSequence.new
+      vlts.setValue(LongName::Factory.fromString(slot_value,nil))
       st.setValueList(vlt)
-      it.getSlot().add(st)
+      it.addSlot(st)
     
       it
     end
@@ -80,19 +82,23 @@ module XDS
       lst = LocalizedStringType.new
       case name
       when :patient_id
-        ei.setIdentificationScheme('urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427')
-        lst.setValue('patientId')
+        ei.setIdentificationScheme(to_reference_uri('urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427'))
+        lst.setValue(to_free_form_text('patientId'))
       when :unique_id
-        ei.setIdentificationScheme('urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab')
-        lst.setValue('XDSDocumentEntry.uniqueId')
+        ei.setIdentificationScheme(to_reference_uri('urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab'))
+        lst.setValue(to_free_form_text('XDSDocumentEntry.uniqueId'))
       end
+
+      ists = InternationalStringTypeSequence.new
+      ists.setLocalizedString(lst)
+      ist.addInternationalStringTypeSequence(ists)
     
-      ist.getLocalizedString().add(lst)
       ei.setName(ist)
-      ei.setValue(self.send(name))
+      ei.setValue(to_long_name(self.send(name)))
     
       ei
     end
+
 
   end
 end

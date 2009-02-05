@@ -2,22 +2,24 @@ module XDS
   class Service
   
     def initialize(url)
-      service_url = java.net.URL.new(url)
-      @service = DocumentRepositoryService.new(service_url)
-      @port = @service.getDocumentRepositoryPortSoap12()
+      @service = DocumentRepository_ServiceStub.new(url)
     end
   
   
     def provide_and_register_document_set(metadata, document)
-      sor = SubmitObjectsRequest.new
+      sor = SubmitObjectsRequest_type0.new
       sor.setRegistryObjectList(metadata.create_registry_object_list)
       pardsr = ProvideAndRegisterDocumentSetRequestType.new
+      pardsr.setProvideAndRegisterDocumentSetRequestTypeSequence_type0(ProvideAndRegisterDocumentSetRequestTypeSequence_type0.new)
       pardsr.setSubmitObjectsRequest(sor)
-      web_service_document = ProvideAndRegisterDocumentSetRequestType::Document.new
-      web_service_document.setValue(document.to_java_bytes)
-      web_service_document.setId('the_document')
-      pardsr.getDocument().add(web_service_document)
-      @port.documentRepositoryProvideAndRegisterDocumentSetB(pardsr)
+      web_service_document = Document_type0::Factory.fromString(document,nil)
+      web_service_document.setId(org.apache.axis2.databinding.types.URI.new('the_document'))
+      pardsr.getProvideAndRegisterDocumentSetRequestTypeSequence_type0.addDocument(web_service_document)
+      
+      req = ProvideAndRegisterDocumentSetRequest.new
+      req.setProvideAndRegisterDocumentSetRequest(pardsr)
+      
+      @service.DocumentRepository_ProvideAndRegisterDocumentSetB(req)
     end
   end
 end

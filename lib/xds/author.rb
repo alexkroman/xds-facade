@@ -1,13 +1,16 @@
 module XDS
   class Author
+    include XDS::Helper
     CLASSIFICATION_SCHEME = 'urn:uuid:93606bcf-9494-43ec-9b4e-a7748d1a838d'
-  
+    
     attr_accessor :institution, :person, :role, :specialty
   
     def create_classification(object_id)
       classification = ClassificationType.new
-      classification.setClassificationScheme(CLASSIFICATION_SCHEME)
-      classification.setClassifiedObject(object_id)
+      uri = ReferenceURI::Factory.fromString(CLASSIFICATION_SCHEME,nil)
+      
+      classification.setClassificationScheme(uri)
+      classification.setClassifiedObject(ReferenceURI::Factory.fromString(object_id,nil))
     
       dump_value_to_slot(classification, 'authorInstitution', @institution)
       dump_value_to_slot(classification, 'authorPerson', @person)
@@ -20,12 +23,16 @@ module XDS
     def dump_value_to_slot(classification, value_name, value)
       if value
         st = SlotType1.new
-        st.setName(value_name)
+        st.setName(LongName::Factory.fromString(value_name,nil))
         vlt = ValueListType.new
-        vlt.getValue().add(value)
+        vlts = ValueListTypeSequence.new
+        vlts.setValue(LongName::Factory.fromString(value,nil))
+        vlt.addValueListTypeSequence(vlts)
         st.setValueList(vlt)
-        classification.getSlot().add(st)
+        classification.addSlot(st)
       end
     end
+    
+    
   end
 end
