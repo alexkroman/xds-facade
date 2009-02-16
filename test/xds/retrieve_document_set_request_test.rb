@@ -5,7 +5,7 @@ class RetrieveDocumentSetRequestTest < Test::Unit::TestCase
   context "A RetrieveDocumentSetRequest" do
     setup do
      
-      @rdsr = XDS::RetrieveDocumentSetRequest.new
+      @rdsr = XDS::RetrieveDocumentSetRequest.new("http://129.6.24.109:9080/axis2xop/services/xdsrepositoryb")
       @rdsr.add_ids_to_request('1.19.6.24.109.42.1', '129.6.58.91.13297')
       @rdsr.add_ids_to_request('1.19.6.24.109.42.1', '129.6.58.91.13298')
     end
@@ -20,7 +20,6 @@ class RetrieveDocumentSetRequestTest < Test::Unit::TestCase
     end
     
     should "query the NIST Public Registry" do
-      @rdsr.endpoint_uri = "http://129.6.24.109:9080/axis2xop/services/xdsrepositoryb"
       response = @rdsr.execute
     end
     

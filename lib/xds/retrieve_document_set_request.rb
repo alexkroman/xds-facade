@@ -1,9 +1,9 @@
 module XDS
   class RetrieveDocumentSetRequest < XdsRequest
     
-    def initialize
-      @header = XdsHeader.new("urn:ihe:iti:2007:RetrieveDocumentSet","")
-      @doc_ids = []
+    def initialize(service_url, doc_ids = [])
+      super(service_url,"urn:ihe:iti:2007:RetrieveDocumentSet")
+      @doc_ids = doc_ids
     end
     
     def add_ids_to_request(repository_unique_id, document_unique_id)

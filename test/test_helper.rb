@@ -29,4 +29,11 @@ module XmlTestHelper
                              'wsa' => "http://www.w3.org/2005/08/addressing"}
   end
   
+  def common_namespaces_for_building
+     
+     @common_namespaces_for_building ||= {'xmlns:xdsb' => "urn:ihe:iti:xds-b:2007", 
+                            'xmlns:soapenv' =>"http://www.w3.org/2003/05/soap-envelope",
+                            'xmlns:wsa' => "http://www.w3.org/2005/08/addressing"}
+  end
+  
 end

@@ -6,6 +6,12 @@ module XDS
     end
   
   
+    def create_retrieve_document_request(doc_ids = [])
+      RetrieveDocumentRequest.new(@service_url,doc_ids)    
+    end
+    
+    
+  
     def provide_and_register_document_set(metadata, document)
       sor = SubmitObjectsRequest_type0.new
       sor.setRegistryObjectList(metadata.create_registry_object_list)
