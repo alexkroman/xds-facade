@@ -5,13 +5,13 @@ module XDS
    
    
      def self.new_message_id()
-        UUID.new.generate      
+        "urn:uuid:#{UUID.new.generate}"      
      end
      
       
      attr_accessor :action
      attr_accessor :endpoint_uri
-     
+     @@namespace= {"xmlns" => "http://www.w3.org/2005/08/addressing"}
      
      def initialize(action,endpoint,message_id = XdsHeader.new_message_id)
        @action = action
@@ -20,22 +20,11 @@ module XDS
      end
      
      def to_soap(builder)
-       generate_action(builder)
-       generate_endpoint(builder)
-       generate_message_id(builder)
-     end
-     
-     
-     def generate_action(builder)
-       
-     end
-     
-     def generate_endpoint(builder)
-       
-     end
-     
-     def generate_message_id(builder)
-       
+       builder.Header("xmlns"=>"http://www.w3.org/2003/05/soap-envelope","xmlns:wsa" =>"http://www.w3.org/2005/08/addressing") do
+          builder.wsa(:To, @endpoint_uri)
+          builder.wsa(:Action, @action)
+          builder.wsa(:MessageID, @message_id) 
+       end
      end
      
   end
