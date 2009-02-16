@@ -20,7 +20,6 @@ if RUBY_PLATFORM =~ /java/
   require File.expand_path(File.dirname(__FILE__) + '/xds/author')
   require File.expand_path(File.dirname(__FILE__) + '/xds/coded_attribute')
   require File.expand_path(File.dirname(__FILE__) + '/xds/metadata')
-  require File.expand_path(File.dirname(__FILE__) + '/xds/service')
   require File.expand_path(File.dirname(__FILE__) + '/xds/source_patient_info')
   require File.expand_path(File.dirname(__FILE__) + '/xds/retrieve_document_set_request')
   
