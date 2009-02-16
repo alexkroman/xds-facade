@@ -1,6 +1,7 @@
 if RUBY_PLATFORM =~ /java/
   require 'rubygems'
   require 'builder'
+  require 'uuid'
   require 'java'
   
   require 'lib/apache-mime4j-0.5.jar'
@@ -16,6 +17,7 @@ if RUBY_PLATFORM =~ /java/
   
 
   require File.expand_path(File.dirname(__FILE__) + '/xds/helper')
+  require File.expand_path(File.dirname(__FILE__) + '/xds/xds_header')
   require File.expand_path(File.dirname(__FILE__) + '/xds/xds_request')
   require File.expand_path(File.dirname(__FILE__) + '/xds/author')
   require File.expand_path(File.dirname(__FILE__) + '/xds/coded_attribute')
