@@ -9,6 +9,11 @@ if RUBY_PLATFORM =~ /java/
   require 'lib/httpclient-4.0-beta2.jar'
   require 'lib/httpcore-4.0-beta3.jar'
   require 'lib/httpmime-4.0-beta2.jar'
+  
+  import "org.apache.http.impl.client.DefaultHttpClient"
+  import "org.apache.http.client.methods.HttpPost"
+  import "org.apache.http.entity.StringEntity"
+  
 
   require File.expand_path(File.dirname(__FILE__) + '/xds/helper')
   require File.expand_path(File.dirname(__FILE__) + '/xds/author')
