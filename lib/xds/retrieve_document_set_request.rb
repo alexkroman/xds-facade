@@ -1,7 +1,8 @@
 module XDS
-  class RetrieveDocumentSetRequest
+  class RetrieveDocumentSetRequest < XdsRequest
     
     def initialize
+      @header = XdsHeader.new("urn:ihe:iti:2007:RetrieveDocumentSet","")
       @doc_ids = []
     end
     
@@ -10,9 +11,8 @@ module XDS
                    :document_unique_id => document_unique_id}
     end
     
-    def to_soap_body(body_attributes = {})
-      builder = Builder::XmlMarkup.new(:indent => 2)
-      
+    def to_soap_body(builder,body_attributes = {})
+     
       builder.soapenv(:Body, body_attributes) do
         builder.RetrieveDocumentSetRequest('xmlns' => "urn:ihe:iti:xds-b:2007") do
           @doc_ids.each do |doc_id|
