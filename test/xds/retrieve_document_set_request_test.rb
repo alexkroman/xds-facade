@@ -20,6 +20,7 @@ class RetrieveDocumentSetRequestTest < Test::Unit::TestCase
     
     should "query the NIST Public Registry" do
       response = @rdsr.execute
+      puts response
     end
     
   end

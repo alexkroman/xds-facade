@@ -14,10 +14,13 @@ module XDS
     end
     
     def execute
-      client = DefaultHttpClient.new
-      post = HttpPost.new(endpoint_uri)
-      post.entity = StringEntity.new(to_soap)
-      client.execute(post)
+      client = HttpClient.new
+      host_config = client.host_configuration
+      host_config.setProxy('gatekeeper.mitre.org', 80)
+      post = PostMethod.new(endpoint_uri)
+      post.request_entity = StringRequestEntity.new(to_soap, 'application/soap+xml', 'UTF-8')
+      client.executeMethod(post)
+      post.getResponseBodyAsString
     end
     
     def to_soap(builder = Builder::XmlMarkup.new(:indent => 2),attributes={})
