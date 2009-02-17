@@ -1,0 +1,30 @@
+MIME-version: 1.0
+Content-type: multipart/mixed; boundary="MIMEBoundaryurn_uuid_AE54CA7CD31A4A6AC31234898619749"
+
+--MIMEBoundaryurn_uuid_AE54CA7CD31A4A6AC31234898619749
+Content-Type: application/xop+xml; charset=UTF-8; type="application/soap+xml"
+Content-Transfer-Encoding: binary
+Content-ID: <0.urn:uuid:AE54CA7CD31A4A6AC31234898619750@apache.org>
+
+<?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:wsa="http://www.w3.org/2005/08/addressing"><soapenv:Header><wsa:Action>urn:ihe:iti:2007:RetrieveDocumentSetResponse</wsa:Action><wsa:RelatesTo>urn:uuid:6de46420-df56-012b-dd17-001b639b41b1</wsa:RelatesTo></soapenv:Header><soapenv:Body><xdsb:RetrieveDocumentSetResponse xmlns:xdsb="urn:ihe:iti:xds-b:2007"><rs:RegistryResponse xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0" status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success" /><xdsb:DocumentResponse><xdsb:RepositoryUniqueId>1.19.6.24.109.42.1</xdsb:RepositoryUniqueId><xdsb:DocumentUniqueId>229.6.58.29.939</xdsb:DocumentUniqueId><xdsb:mimeType>text/plain</xdsb:mimeType><xdsb:Document><xop:Include href="cid:1.urn:uuid:AE54CA7CD31A4A6AC31234898619752@apache.org" xmlns:xop="http://www.w3.org/2004/08/xop/include" /></xdsb:Document></xdsb:DocumentResponse><xdsb:DocumentResponse><xdsb:RepositoryUniqueId>1.19.6.24.109.42.1</xdsb:RepositoryUniqueId><xdsb:DocumentUniqueId>229.6.58.29.937</xdsb:DocumentUniqueId><xdsb:mimeType>text/plain</xdsb:mimeType><xdsb:Document><xop:Include href="cid:2.urn:uuid:AE54CA7CD31A4A6AC31234898619753@apache.org" xmlns:xop="http://www.w3.org/2004/08/xop/include" /></xdsb:Document></xdsb:DocumentResponse></xdsb:RetrieveDocumentSetResponse></soapenv:Body></soapenv:Envelope>
+--MIMEBoundaryurn_uuid_AE54CA7CD31A4A6AC31234898619749
+Content-Type: text/plain
+Content-Transfer-Encoding: binary
+Content-ID: <1.urn:uuid:AE54CA7CD31A4A6AC31234898619752@apache.org>
+
+Initialization for Registry/Repository testing
+
+Two versions of the testplan are supplied, one coded for XDS.a and one for XDS.b.
+To use, rename one of them to testplan.xml and run with xdstest.
+
+--MIMEBoundaryurn_uuid_AE54CA7CD31A4A6AC31234898619749
+Content-Type: text/plain
+Content-Transfer-Encoding: binary
+Content-ID: <2.urn:uuid:AE54CA7CD31A4A6AC31234898619753@apache.org>
+
+Initialization for Registry/Repository testing
+
+Two versions of the testplan are supplied, one coded for XDS.a and one for XDS.b.
+To use, rename one of them to testplan.xml and run with xdstest.
+
+--MIMEBoundaryurn_uuid_AE54CA7CD31A4A6AC31234898619749--

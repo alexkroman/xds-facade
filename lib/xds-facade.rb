@@ -7,11 +7,16 @@ if RUBY_PLATFORM =~ /java/
   require 'lib/commons-codec-1.3.jar'
   require 'lib/commons-logging-1.1.1.jar'
   require 'lib/commons-httpclient-3.1.jar'
+  require 'lib/apache-mime4j-0.5.jar'
   
   import "org.apache.commons.httpclient.HttpClient"
   import "org.apache.commons.httpclient.methods.PostMethod"
   import "org.apache.commons.httpclient.methods.StringRequestEntity"
   
+  import "org.apache.james.mime4j.parser.MimeTokenStream"
+  import "org.apache.james.mime4j.parser.MimeEntityConfig"
+  
+  require File.expand_path(File.dirname(__FILE__) + '/mime/mime_message_parser')
 
   require File.expand_path(File.dirname(__FILE__) + '/xds/helper')
   require File.expand_path(File.dirname(__FILE__) + '/xds/xds_header')

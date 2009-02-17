@@ -20,7 +20,7 @@ module XDS
       post = PostMethod.new(endpoint_uri)
       post.request_entity = StringRequestEntity.new(to_soap, 'application/soap+xml', 'UTF-8')
       client.executeMethod(post)
-      post.getResponseBodyAsString
+      post
     end
     
     def to_soap(builder = Builder::XmlMarkup.new(:indent => 2),attributes={})
