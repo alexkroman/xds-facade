@@ -24,7 +24,16 @@ if RUBY_PLATFORM =~ /java/
   require File.expand_path(File.dirname(__FILE__) + '/xds/metadata')
   require File.expand_path(File.dirname(__FILE__) + '/xds/source_patient_info')
   require File.expand_path(File.dirname(__FILE__) + '/xds/retrieve_document_set_request')
+  require File.expand_path(File.dirname(__FILE__) + '/xds/retrieve_document_set_response')
   
 else
   warn "xds-facade is only for use with JRuby"
+end
+
+module XDS
+  COMMON_NAMESPACES = {'xdsb' => "urn:ihe:iti:xds-b:2007", 
+                       'soapenv' =>"http://www.w3.org/2003/05/soap-envelope",
+                       'wsa' => "http://www.w3.org/2005/08/addressing",
+                       'rs' => "urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0",
+                       'xop' => "http://www.w3.org/2004/08/xop/include"}
 end

@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"
+    xmlns:wsa="http://www.w3.org/2005/08/addressing">
+    <soapenv:Header>
+        <wsa:Action>urn:ihe:iti:2007:RetrieveDocumentSetResponse</wsa:Action>
+        <wsa:RelatesTo>urn:uuid:A920DC9E26409B53231199380832547</wsa:RelatesTo>
+    </soapenv:Header>
+    <soapenv:Body>
+        <xdsb:RetrieveDocumentSetResponse xmlns:xdsb="urn:ihe:iti:xds-b:2007">
+            <rs:RegistryResponse xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0"
+                status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success"/>
+            <xdsb:DocumentResponse>
+                <xdsb:Document>
+                    <xop:Include href="cid:1.urn:uuid:3BE45FAC62CF0568A81199380869990@apache.org"
+                        xmlns:xop="http://www.w3.org/2004/08/xop/include"/>
+                </xdsb:Document>
+                <xdsb:RepositoryUniqueId>1.19.6.24.109.42.1</xdsb:RepositoryUniqueId>
+                <xdsb:DocumentUniqueId>1.2.3.4.100000022002209036.1196211173506.1</xdsb:DocumentUniqueId>
+                <xdsb:mimeType>text/xml</xdsb:mimeType>
+            </xdsb:DocumentResponse>
+        </xdsb:RetrieveDocumentSetResponse>
+    </soapenv:Body>
+</soapenv:Envelope>
