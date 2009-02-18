@@ -27,6 +27,7 @@ if RUBY_PLATFORM =~ /java/
   require File.expand_path(File.dirname(__FILE__) + '/xds/source_patient_info')
   require File.expand_path(File.dirname(__FILE__) + '/xds/retrieve_document_set_request')
   require File.expand_path(File.dirname(__FILE__) + '/xds/retrieve_document_set_response')
+  require File.expand_path(File.dirname(__FILE__) + '/xds/registry_stored_query_request')
   
 else
   warn "xds-facade is only for use with JRuby"

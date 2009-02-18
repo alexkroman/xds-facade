@@ -1,4 +1,5 @@
-class ProvideAndRegisterDocumentSetB < XdsRequest
+module XDS
+  class ProvideAndRegisterDocumentSetB < XdsRequest
   
     def initialize(service_url)
         super(service_url,"urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b")
