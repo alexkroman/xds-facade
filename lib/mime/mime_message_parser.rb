@@ -1,4 +1,9 @@
 module MIME
+  # The constructor for MimeTokenStream that takes a MimeEntityConfig is
+  # protected. We need to pass in a new config becuse the default one
+  # has a max line length of 1000. Since we will be getting SOAP repsonses
+  # with out new lines, we will easily exceed that. This class produces
+  # a MimeTokenStream with a longer max line length
   class FixedMimeTokenStream < MimeTokenStream
     def initialize()
       config = MimeEntityConfig.new
@@ -8,6 +13,12 @@ module MIME
   end
   
   class MimeMessageParser
+    
+    # Parses a mime message and returns an array of hashes for each part of the message
+    # The hash will contain the following:
+    # * <tt>:content_type</tt> - The content type of the message part
+    # * <tt>:content_id</tt> - The id of the content (useful for dealing with MTOM/XOP)
+    # * <tt>:content</tt> - The actual content of the message as a String
     def self.parse(input_stream)
       parts = []
       mts = FixedMimeTokenStream.new()
