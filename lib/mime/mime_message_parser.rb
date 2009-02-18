@@ -19,10 +19,10 @@ module MIME
     # * <tt>:content_type</tt> - The content type of the message part
     # * <tt>:content_id</tt> - The id of the content (useful for dealing with MTOM/XOP)
     # * <tt>:content</tt> - The actual content of the message as a String
-    def self.parse(input_stream)
+    def self.parse(input_stream, content_type)
       parts = []
       mts = FixedMimeTokenStream.new()
-      mts.parse(input_stream)
+      mts.parse_headless(input_stream, content_type)
       current_message = {}
       until(mts.state == MimeTokenStream::T_END_OF_STREAM)
         case mts.state

@@ -18,6 +18,16 @@ module XDS
                   COMMON_NAMESPACES)
       if status.to_s.eql?('urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success')
         @request_successful = true
+        REXML::XPath.each(doc, 
+                    '/soapenv:Envelope/soapenv:Body/xdsb:RetrieveDocumentSetResponse/xdsb:DocumentResponse',
+                    COMMON_NAMESPACES) do |dr|
+          doc = {}
+          #Nuke the 'cid:' from the front of the content id since it doesn't show up in the mime message headers
+          doc[:content_id] = dr.elements['xdsb:Document/xop:Include'].attributes['href'].to_s.sub('cid:', '')
+          doc[:repository_unique_id] = dr.elements['xdsb:RepositoryUniqueId'].text
+          doc[:document_unique_id] = dr.elements['xdsb:DocumentUniqueId'].text
+          @retrieved_documents << doc
+        end
       end
     end
   end

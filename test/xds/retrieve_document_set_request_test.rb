@@ -19,8 +19,12 @@ class RetrieveDocumentSetRequestTest < Test::Unit::TestCase
     end
     
     should "query the NIST Public Registry" do
-      response = @rdsr.execute
-      puts response
+      docs = @rdsr.execute
+      assert docs
+      assert_equal 2, docs.length
+      assert_equal '1.19.6.24.109.42.1', docs.first[:repository_unique_id]
+      assert_equal '229.6.58.29.939', docs.first[:document_unique_id]
+      assert docs.first[:content]
     end
     
   end
