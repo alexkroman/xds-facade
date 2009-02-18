@@ -1,7 +1,6 @@
 module XDS
   class CodedAttribute
-  include XDS::Helper
-    attr_accessor :code, :display_name, :coding_scheme
+    include XDS::Helper
     attr_reader :classification_scheme
   
     def initialize(attribute_type, code = nil, display_name = nil, coding_scheme = nil)
@@ -19,39 +18,16 @@ module XDS
       when :type_code
         @classification_scheme = 'urn:uuid:f0306f51-975f-434e-a61c-c59651d33983'
       end
-    end
-  
-    def create_classification(object_id)
-      classification = ClassificationType.new
-      
-      classification.setClassificationScheme(to_reference_uri(@classification_scheme))
-      classification.setClassifiedObject(to_reference_uri(object_id))
-      classification.setNodeRepresentation(to_reference_uri(@code)) if @code
-    
-      ist = InternationalStringType.new
-      lst = LocalizedStringType.new
-      fft = FreeFormText.new
-      fft.setFreeFormText(@display_name)
-      lst.setValue(fft)
-      
-      ists = InternationalStringTypeSequence.new
-      ists.setLocalizedString(lst)
-      ist.addInternationalStringTypeSequence(ists)
-
-      classification.setName(ist)
-    
-      st = SlotType1.new
-      st.setName(to_long_name("codingScheme"))
-      vlt = ValueListType.new
-      vlts = ValueListTypeSequence.new
-      vlts.setValue(to_long_name(@coding_scheme)) if @coding_scheme
-      vlt.addValueListTypeSequence(vlts)
-      st.setValueList(vlt)
-      classification.addSlot(st)
-    
-      classification
+      @code = code
+      @display_name = display_name
+      @coding_scheme=coding_scheme
     end
     
-
-  end
+    def to_soap(builder, object_id)      
+     create_classification(builder,@classification_scheme,object_id,@code) do |build|
+        create_name(build,@display_name)
+        create_slot(build,"codingScheme",@coding_scheme || [])
+     end
+    end
+  end  
 end

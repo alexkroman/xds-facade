@@ -4,7 +4,6 @@ class RetrieveDocumentSetRequestTest < Test::Unit::TestCase
   include XmlTestHelper
   context "A RetrieveDocumentSetRequest" do
     setup do
-     
       @rdsr = XDS::RetrieveDocumentSetRequest.new("http://129.6.24.109:9080/axis2xop/services/xdsrepositoryb")
       @rdsr.add_ids_to_request('1.19.6.24.109.42.1', '229.6.58.29.939')
       @rdsr.add_ids_to_request('1.19.6.24.109.42.1', '229.6.58.29.937')
