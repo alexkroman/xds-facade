@@ -12,7 +12,11 @@ class RegistryStoredQueryRequestTest < Test::Unit::TestCase
     should "create a SOAP Body" do
       soap_body = @rsqr.to_soap_body(create_builder,'xmlns:soapenv' => "http://www.w3.org/2003/05/soap-envelope")
       assert soap_body
-      puts soap_body
+      namespaces = {'query' => "urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0", 'rim' => 'urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0'}.merge(common_namespaces)
+      assert_xpath(soap_body, "/soapenv:Body/query:AdhocQueryRequest/query:ResponseOption[@returnType='LeafClass']", namespaces)
+      assert_xpath(soap_body, "/soapenv:Body/query:AdhocQueryRequest/rim:AdhocQuery/rim:Slot[@name='$XDSDocumentEntryPatientId']", namespaces)
+      assert_xpath(soap_body, "/soapenv:Body/query:AdhocQueryRequest/rim:AdhocQuery/rim:Slot[@name='$XDSDocumentEntryStatus']", namespaces)
+      assert_xpath(soap_body, '/soapenv:Body/query:AdhocQueryRequest/rim:AdhocQuery/rim:Slot[@name="$XDSDocumentEntryPatientId"]/rim:ValueList/rim:Value', namespaces)
     end
     
     should "query the NIST Public Registry" do
