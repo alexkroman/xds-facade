@@ -62,6 +62,11 @@ module XDS
         
       end
     end
+    
+    def load_from_extrinsic_object(eo_node)
+      
+      
+    end
 
     def external_identifier(builder,name)
       EXTERNAL_ID_SCHEMES[name]

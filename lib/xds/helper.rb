@@ -44,6 +44,15 @@ module XDS
       end
     end
     
+    def with_classification(eo_node, classification_scheme, &block)
+      if block_given?
+        classification = REXML::XPath.first(eo_node, "rim:Classification[@classificationScheme='#{classification_scheme}']", {'rim' => 'urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0'})
+        if classification
+          yield classification
+        end
+      end
+    end
+    
     def get_slot_value(eo_node, slot_name)
       value_node = REXML::XPath.first(eo_node, "rim:Slot[@name='#{slot_name}']/rim:ValueList/rim:Value", {'rim' => 'urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0'})
       if value_node

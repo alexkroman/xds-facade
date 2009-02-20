@@ -14,4 +14,30 @@
       <rim:Value>20041224</rim:Value>
     </rim:ValueList>
   </rim:Slot>
+  <rim:Classification id="urn:uuid:a6f45b95-936e-4404-b1f6-832f30e9ca6f" objectType="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification" classificationScheme="urn:uuid:93606bcf-9494-43ec-9b4e-a7748d1a838d" classifiedObject="urn:uuid:6d037c16-d94d-4c10-acfc-f6cae5f7287e" nodeRepresentation="" home="" lid="urn:uuid:a6f45b95-936e-4404-b1f6-832f30e9ca6f">
+    <rim:Slot name="authorInstitution">
+      <rim:ValueList>
+        <rim:Value>Cleveland Clinic</rim:Value>
+        <rim:Value>Berea Community</rim:Value>
+      </rim:ValueList>
+    </rim:Slot>
+    <rim:Slot name="authorPerson">
+      <rim:ValueList>
+        <rim:Value>^Dopplemeyer^Sherry^^^</rim:Value>
+      </rim:ValueList>
+    </rim:Slot>
+    <rim:Slot name="authorRole">
+      <rim:ValueList>
+        <rim:Value>Primary Surgon</rim:Value>
+      </rim:ValueList>
+    </rim:Slot>
+    <rim:Slot name="authorSpecialty">
+      <rim:ValueList>
+        <rim:Value>Orthopedic</rim:Value>
+      </rim:ValueList>
+    </rim:Slot>
+    <rim:Name/>
+    <rim:Description/>
+    <rim:VersionInfo versionName="1.1"/>
+  </rim:Classification>
 </rim:ExtrinsicObject>

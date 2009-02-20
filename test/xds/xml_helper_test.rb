@@ -5,7 +5,11 @@ class XmlHelperTest < Test::Unit::TestCase
   include XDS::Helper
   
   context "The Xml Helper" do
-    
+     setup do
+       eo_xml = REXML::Document.new(File.read(File.expand_path(File.dirname(__FILE__) + '/../data/extrinsic_object.xml')))
+       @eo_node = eo_xml.root
+     end
+     
      should "be able to create a  slot" do
            
            slot = create_slot(create_builder,"testSlot", ["value1","value2"])   
@@ -77,11 +81,6 @@ class XmlHelperTest < Test::Unit::TestCase
      end
      
      context "when getting a slot value" do
-      setup do
-        eo_xml = REXML::Document.new(File.read(File.expand_path(File.dirname(__FILE__) + '/../data/extrinsic_object.xml')))
-        @eo_node = eo_xml.root
-      end
-      
       should "get the slot value" do
         creation_time = get_slot_value(@eo_node, 'creationTime')
         assert_equal('20041224', creation_time)
@@ -96,6 +95,12 @@ class XmlHelperTest < Test::Unit::TestCase
         uri = get_slot_value(@eo_node, 'URI')
         assert_equal 'http://129.6.24.109:9080/Repository/229.6.58.29.939.txt', uri
       end
+     end
+     
+     should 'be able to provide a block to a desired classification' do
+        with_classification(@eo_node, "urn:uuid:93606bcf-9494-43ec-9b4e-a7748d1a838d") do |classification|
+          assert_equal "urn:uuid:6d037c16-d94d-4c10-acfc-f6cae5f7287e", classification.attributes['classifiedObject']
+        end
      end
     
   end
