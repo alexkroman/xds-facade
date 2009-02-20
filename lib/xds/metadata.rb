@@ -66,6 +66,22 @@ module XDS
     def load_from_extrinsic_object(eo_node)
       @author = Author.new
       @author.from_extrinsic_object(eo_node)
+      @availability_status = CodedAttribute.new(:availability_status)
+      @availability_status.from_extrinsic_object(eo_node)
+      @class_code = CodedAttribute.new(:class_code)
+      @class_code.from_extrinsic_object(eo_node)
+      @confidentiality_code = CodedAttribute.new(:confidentiality_code)
+      @confidentiality_code.from_extrinsic_object(eo_node)
+      
+      creation_time_in_hl7ts = get_slot_value(eo_node, 'creationTime')
+      if creation_time_in_hl7ts
+        @creation_time = Date.strptime(creation_time_in_hl7ts, '%Y%m%d')
+      end
+      
+      @format_code = CodedAttribute.new(:format_code)
+      @format_code.from_extrinsic_object(eo_node)
+      @healthcare_facility_type_code = CodedAttribute.new(:healthcare_facility_type_code)
+      @healthcare_facility_type_code.from_extrinsic_object(eo_node)
       
     end
 
