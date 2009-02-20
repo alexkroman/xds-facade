@@ -1,7 +1,7 @@
 module XDS
   class CodedAttribute
     include XDS::Helper
-    attr_reader :classification_scheme
+    attr_reader :classification_scheme, :code, :display_name, :coding_scheme
   
     def initialize(attribute_type, code = nil, display_name = nil, coding_scheme = nil)
       case attribute_type
@@ -24,10 +24,21 @@ module XDS
     end
     
     def to_soap(builder, object_id)      
-     create_classification(builder,@classification_scheme,object_id,@code) do |build|
+      create_classification(builder,@classification_scheme,object_id,@code) do |build|
         create_name(build,@display_name)
         create_slot(build,"codingScheme",@coding_scheme || [])
-     end
+      end
+    end
+    
+    def from_extrinsic_object(eo_node)
+      with_classification(eo_node, @classification_scheme) do |classification|
+        @code = classification.attributes['nodeRepresentation']
+        localized_string_node = REXML::XPath.first(classification, 'rim:Name/rim:LocalizedString')
+        if localized_string_node
+          @display_name = localized_string_node.attributes['value']
+        end
+        @coding_scheme = get_slot_value(classification, 'codingScheme')
+      end
     end
   end  
 end

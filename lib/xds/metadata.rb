@@ -64,7 +64,8 @@ module XDS
     end
     
     def load_from_extrinsic_object(eo_node)
-      
+      @author = Author.new
+      @author.from_extrinsic_object(eo_node)
       
     end
 

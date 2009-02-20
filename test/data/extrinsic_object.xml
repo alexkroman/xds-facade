@@ -40,4 +40,16 @@
     <rim:Description/>
     <rim:VersionInfo versionName="1.1"/>
   </rim:Classification>
+  <rim:Classification id="urn:uuid:35767112-f927-4c3f-9737-f71fcb0cbe13" objectType="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:Classification" classificationScheme="urn:uuid:cccf5598-8b07-4b77-a05e-ae952c785ead" classifiedObject="urn:uuid:6d037c16-d94d-4c10-acfc-f6cae5f7287e" nodeRepresentation="Cardiology" home="" lid="urn:uuid:35767112-f927-4c3f-9737-f71fcb0cbe13">
+    <rim:Slot name="codingScheme">
+      <rim:ValueList>
+        <rim:Value>Connect-a-thon practiceSettingCodes</rim:Value>
+      </rim:ValueList>
+    </rim:Slot>
+    <rim:Name>
+      <rim:LocalizedString xml:lang="en-us" charset="UTF-8" value="Cardiology"/>
+    </rim:Name>
+    <rim:Description/>
+    <rim:VersionInfo versionName="1.1"/>
+  </rim:Classification>
 </rim:ExtrinsicObject>
