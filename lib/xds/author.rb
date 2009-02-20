@@ -13,12 +13,21 @@ module XDS
     end
     
     def to_soap(builder, object_id)
-        create_classification(builder,CLASSIFICATION_SCHEME,object_id,"") do |build|
-          create_slot(builder,'authorInstitution', [@institution])
-          create_slot(builder,'authorPerson', @person)
-          create_slot(builder,'authorRole', @role)
-          create_slot(builder,'authorSpecialty', @specialty)
-        end
-     end
-   end
+      create_classification(builder,CLASSIFICATION_SCHEME,object_id,"") do |build|
+        create_slot(builder,'authorInstitution', [@institution])
+        create_slot(builder,'authorPerson', @person)
+        create_slot(builder,'authorRole', @role)
+        create_slot(builder,'authorSpecialty', @specialty)
+      end
+    end
+    
+    def from_extrinsic_object(eo_node)
+      with_classification(eo_node, CLASSIFICATION_SCHEME) do |classification|
+        @institution = get_slot_value(classification, 'authorInstitution')
+        @person = get_slot_value(classification, 'authorPerson')
+        @role = get_slot_value(classification, 'authorRole')
+        @specialty = get_slot_value(classification, 'authorSpecialty')
+      end
+    end
+  end
 end
