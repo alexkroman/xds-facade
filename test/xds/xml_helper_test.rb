@@ -75,6 +75,28 @@ class XmlHelperTest < Test::Unit::TestCase
        assert_xpath(eo,"/ExtrinsicObject/Slot/ValueList/Value[text() = 'value1']",{},1)
        assert_xpath(eo,"/ExtrinsicObject/Slot/ValueList/Value[text() = 'value2']",{},1)
      end
+     
+     context "when getting a slot value" do
+      setup do
+        eo_xml = REXML::Document.new(File.read(File.expand_path(File.dirname(__FILE__) + '/../data/extrinsic_object.xml')))
+        @eo_node = eo_xml.root
+      end
+      
+      should "get the slot value" do
+        creation_time = get_slot_value(@eo_node, 'creationTime')
+        assert_equal('20041224', creation_time)
+      end
+      
+      should "return nil when the slot doesn't exist" do
+        nuthin = get_slot_value(@eo_node, 'foo')
+        assert_nil nuthin
+      end
+      
+      should "return the first value when there are multiple values in the list" do
+        uri = get_slot_value(@eo_node, 'URI')
+        assert_equal 'http://129.6.24.109:9080/Repository/229.6.58.29.939.txt', uri
+      end
+     end
     
   end
   

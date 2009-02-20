@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rim:ExtrinsicObject id="urn:uuid:6d037c16-d94d-4c10-acfc-f6cae5f7287e" objectType="urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1"  
+                     status="urn:oasis:names:tc:ebxml-regrep:StatusType:Approved" mimeType="text/plain" 
+                     isOpaque="false" home="" lid="urn:uuid:6d037c16-d94d-4c10-acfc-f6cae5f7287e"
+                     xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0">
+  <rim:Slot name="URI">
+    <rim:ValueList>
+      <rim:Value>http://129.6.24.109:9080/Repository/229.6.58.29.939.txt</rim:Value>
+      <rim:Value>http://www.example.com</rim:Value>
+    </rim:ValueList>
+  </rim:Slot>
+  <rim:Slot name="creationTime">
+    <rim:ValueList>
+      <rim:Value>20041224</rim:Value>
+    </rim:ValueList>
+  </rim:Slot>
+</rim:ExtrinsicObject>

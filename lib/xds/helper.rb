@@ -43,5 +43,14 @@ module XDS
           yield builder if block_given?
       end
     end
+    
+    def get_slot_value(eo_node, slot_name)
+      value_node = REXML::XPath.first(eo_node, "rim:Slot[@name='#{slot_name}']/rim:ValueList/rim:Value", {'rim' => 'urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0'})
+      if value_node
+        return value_node.text
+      else
+        return nil
+      end
+    end
   end
 end
