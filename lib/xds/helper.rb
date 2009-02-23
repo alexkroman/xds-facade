@@ -70,5 +70,10 @@ module XDS
         return nil
       end
     end
+    
+    def get_external_identifier_value(eo_node, scheme)
+      ei_node = REXML::XPath.first(eo_node, "rim:ExternalIdentifier[@identificationScheme='#{scheme}']")
+      ei_node.attributes['value'] if ei_node
+    end
   end
 end

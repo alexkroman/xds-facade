@@ -61,4 +61,11 @@
     <rim:Description/>
     <rim:VersionInfo versionName="1.1"/>
   </rim:Classification>
+  <rim:ExternalIdentifier id="urn:uuid:22ba09be-9db0-4b25-ab98-95ccca8d08ef" objectType="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:ExternalIdentifier" identificationScheme="urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427" value="93f3f8a6d100463^^^&amp;1.3.6.1.4.1.21367.2005.3.7&amp;ISO" home="" lid="urn:uuid:22ba09be-9db0-4b25-ab98-95ccca8d08ef" registryObject="urn:uuid:78bdfd77-82c8-4312-b24a-961db3052e49">
+    <rim:Name>
+      <rim:LocalizedString xml:lang="en-us" charset="UTF-8" value="XDSDocumentEntry.patientId"/>
+    </rim:Name>
+    <rim:Description/>
+    <rim:VersionInfo versionName="1.1"/>
+  </rim:ExternalIdentifier>
 </rim:ExtrinsicObject>

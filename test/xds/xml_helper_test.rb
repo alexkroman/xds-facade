@@ -112,6 +112,12 @@ class XmlHelperTest < Test::Unit::TestCase
           assert_equal "urn:uuid:6d037c16-d94d-4c10-acfc-f6cae5f7287e", classification.attributes['classifiedObject']
         end
      end
+     
+     should 'be able to get an external identifier' do
+       patient_id = get_external_identifier_value(@eo_node, XDS::Metadata::EXTERNAL_ID_SCHEMES[:patient_id][:scheme])
+       assert patient_id
+       assert_equal '93f3f8a6d100463^^^&1.3.6.1.4.1.21367.2005.3.7&ISO', patient_id
+     end
     
   end
   
