@@ -28,6 +28,7 @@ if RUBY_PLATFORM =~ /java/
   require File.expand_path(File.dirname(__FILE__) + '/xds/retrieve_document_set_request')
   require File.expand_path(File.dirname(__FILE__) + '/xds/retrieve_document_set_response')
   require File.expand_path(File.dirname(__FILE__) + '/xds/registry_stored_query_request')
+  require File.expand_path(File.dirname(__FILE__) + '/xds/registry_stored_query_response')
   
 else
   warn "xds-facade is only for use with JRuby"
@@ -38,5 +39,7 @@ module XDS
                        'soapenv' =>"http://www.w3.org/2003/05/soap-envelope",
                        'wsa' => "http://www.w3.org/2005/08/addressing",
                        'rs' => "urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0",
-                       'xop' => "http://www.w3.org/2004/08/xop/include"}
+                       'xop' => "http://www.w3.org/2004/08/xop/include",
+                       'query' => "urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0",
+                       'rim' => 'urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0'}
 end

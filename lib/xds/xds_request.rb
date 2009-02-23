@@ -15,8 +15,6 @@ module XDS
     
     def execute
       client = HttpClient.new
-      host_config = client.host_configuration
-      host_config.setProxy('gatekeeper.mitre.org', 80)
       post = PostMethod.new(endpoint_uri)
       post.request_entity = StringRequestEntity.new(to_soap, 'application/soap+xml', 'UTF-8')
       client.executeMethod(post)

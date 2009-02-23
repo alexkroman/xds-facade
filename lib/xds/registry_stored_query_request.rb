@@ -7,6 +7,17 @@ module XDS
       @query = query
     end
     
+    def execute
+      post = super
+      rsqr = RegistryStoredQueryResponse.new
+      rsqr.parse_soap_response(post.response_body_as_string)
+      if rsqr.request_successful?
+        return rsqr.retrieved_metadata
+      else
+        return nil
+      end
+    end
+    
     def to_soap_body(builder,body_attributes = {})
       builder.soapenv(:Body, body_attributes) do
         builder.query(:AdhocQueryRequest, 'xmlns:query' => "urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0",

@@ -20,9 +20,12 @@ class RegistryStoredQueryRequestTest < Test::Unit::TestCase
     end
     
     should "query the NIST Public Registry" do
-      response = @rsqr.execute
-      assert response
-      puts response.getResponseBodyAsString
+      rmd = @rsqr.execute
+      assert rmd
+      assert_equal 5, rmd.length
+      md = rmd.first
+      assert_equal '^Smitty^Gerald^^^', md.author.person
+      assert_equal 'Connect-a-thon classCodes', md.class_code.coding_scheme
     end
     
   end
