@@ -72,7 +72,7 @@ module XDS
     end
     
     def get_external_identifier_value(eo_node, scheme)
-      ei_node = REXML::XPath.first(eo_node, "rim:ExternalIdentifier[@identificationScheme='#{scheme}']")
+      ei_node = REXML::XPath.first(eo_node, "rim:ExternalIdentifier[@identificationScheme='#{scheme}']", {'rim' => 'urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0'})
       ei_node.attributes['value'] if ei_node
     end
   end

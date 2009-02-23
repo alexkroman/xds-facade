@@ -74,10 +74,8 @@ module XDS
       @confidentiality_code.from_extrinsic_object(eo_node)
       
       creation_time_in_hl7ts = get_slot_value(eo_node, 'creationTime')
-      if creation_time_in_hl7ts
-        @creation_time = Date.strptime(creation_time_in_hl7ts, '%Y%m%d')
-      end
-      
+      @creation_time = Date.strptime(creation_time_in_hl7ts, '%Y%m%d') if creation_time_in_hl7ts
+
       @format_code = CodedAttribute.new(:format_code)
       @format_code.from_extrinsic_object(eo_node)
       @healthcare_facility_type_code = CodedAttribute.new(:healthcare_facility_type_code)
@@ -87,8 +85,25 @@ module XDS
       
       @mime_type = eo_node.attributes['mimeType']
       
-      @pateint_id = get_slot_value('sourcePatientId')
+      @patient_id = get_external_identifier_value(eo_node, EXTERNAL_ID_SCHEMES[:patient_id][:scheme])
       
+      @practice_setting_code = CodedAttribute.new(:practice_setting_code)
+      @practice_setting_code.from_extrinsic_object(eo_node)
+      
+      service_start_time_in_hl7ts = get_slot_value(eo_node, 'serviceStartTime')
+      @service_start_time = Date.strptime(service_start_time_in_hl7ts, '%Y%m%d') if service_start_time_in_hl7ts
+      service_stop_time_in_hl7ts = get_slot_value(eo_node, 'serviceStopTime')
+      @service_stop_time = Date.strptime(service_stop_time_in_hl7ts, '%Y%m%d') if service_stop_time_in_hl7ts
+
+      @source_patient_info = SourcePatientInfo.new
+      @source_patient_info.from_extrinsic_object(eo_node)
+      
+      @size = get_slot_value(eo_node, 'size')
+      @source_pateint_id = get_slot_value(eo_node, 'sourcePatientId')
+      @type_code = CodedAttribute.new(:type_code)
+      @type_code.from_extrinsic_object(eo_node)
+      @unique_id = get_external_identifier_value(eo_node, EXTERNAL_ID_SCHEMES[:unique_id][:scheme])
+      @uri = get_slot_value(eo_node, 'URI')
     end
 
     def external_identifier(builder,name)
