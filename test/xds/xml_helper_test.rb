@@ -97,6 +97,16 @@ class XmlHelperTest < Test::Unit::TestCase
       end
      end
      
+     context "when getting a slot with multiple values" do
+      should "get the slot values" do
+        uris = get_slot_values(@eo_node, 'URI')
+        assert uris
+        assert_equal 2, uris.length
+        assert_equal 'http://129.6.24.109:9080/Repository/229.6.58.29.939.txt', uris.first
+        assert_equal 'http://www.example.com', uris[1]
+      end
+     end
+     
      should 'be able to provide a block to a desired classification' do
         with_classification(@eo_node, "urn:uuid:93606bcf-9494-43ec-9b4e-a7748d1a838d") do |classification|
           assert_equal "urn:uuid:6d037c16-d94d-4c10-acfc-f6cae5f7287e", classification.attributes['classifiedObject']

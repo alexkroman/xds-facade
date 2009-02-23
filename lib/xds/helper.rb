@@ -61,5 +61,14 @@ module XDS
         return nil
       end
     end
+    
+    def get_slot_values(eo_node, slot_name)
+      value_nodes = REXML::XPath.match(eo_node, "rim:Slot[@name='#{slot_name}']/rim:ValueList/rim:Value", {'rim' => 'urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0'})
+      if value_nodes
+        return value_nodes.map {|n| n.text}
+      else
+        return nil
+      end
+    end
   end
 end

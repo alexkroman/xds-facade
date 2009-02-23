@@ -3,6 +3,15 @@
                      status="urn:oasis:names:tc:ebxml-regrep:StatusType:Approved" mimeType="text/plain" 
                      isOpaque="false" home="" lid="urn:uuid:6d037c16-d94d-4c10-acfc-f6cae5f7287e"
                      xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0">
+  <rim:Slot name="sourcePatientInfo">
+   <rim:ValueList>
+     <rim:Value>PID-3|pid1^^^domain</rim:Value>
+     <rim:Value>PID-5|Doe^John^^^</rim:Value>
+     <rim:Value>PID-7|19560527</rim:Value>
+     <rim:Value>PID-8|M</rim:Value>
+     <rim:Value>PID-11|100 Main St^^Metropolis^Il^44130^USA</rim:Value>
+   </rim:ValueList>
+  </rim:Slot>
   <rim:Slot name="URI">
     <rim:ValueList>
       <rim:Value>http://129.6.24.109:9080/Repository/229.6.58.29.939.txt</rim:Value>

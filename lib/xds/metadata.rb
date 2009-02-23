@@ -82,6 +82,12 @@ module XDS
       @format_code.from_extrinsic_object(eo_node)
       @healthcare_facility_type_code = CodedAttribute.new(:healthcare_facility_type_code)
       @healthcare_facility_type_code.from_extrinsic_object(eo_node)
+      @language_code = CodedAttribute.new(:language_code)
+      @language_code.from_extrinsic_object(eo_node)
+      
+      @mime_type = eo_node.attributes['mimeType']
+      
+      @pateint_id = get_slot_value('sourcePatientId')
       
     end
 

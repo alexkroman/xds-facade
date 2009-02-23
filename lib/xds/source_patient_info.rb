@@ -16,13 +16,33 @@ module XDS
         create_slot(builder,"sourcePatientInfo",value_list)
     end
     
+    def from_extrinsic_object(eo_node)
+      patient_values = get_slot_values(eo_node, 'sourcePatientInfo')
+      @source_patient_identifier = match_and_strip(patient_values, 'PID-3')
+      @name = match_and_strip(patient_values, 'PID-5')
+      @gender = match_and_strip(patient_values, 'PID-8')
+      date_of_birth_hl7 = match_and_strip(patient_values, 'PID-7')
+      @date_of_birth = Date.strptime(date_of_birth_hl7, '%Y%m%d')
+      @address = match_and_strip(patient_values, 'PID-11')
+    end
+    
     def value_list
       ["PID-3|#{@source_patient_identifier}", 
-           "PID-5|#{@name}",
+          "PID-5|#{@name}",
           "PID-8|#{@gender}",
           "PID-7|#{@date_of_birth.strftime('%Y%m%d')}",
           "PID-11|#{@address}"]
           
+    end
+    
+    def match_and_strip(slot_values, pid_segment)
+      slot_value = slot_values.find {|field_value| field_value.match("^#{pid_segment}\\|.*")}
+      if slot_value
+        md = slot_value.match("^#{pid_segment}\\|(.+)")
+        return md[1]
+      else
+        return nil
+      end
     end
   end
 end
