@@ -20,6 +20,8 @@ spec = Gem::Specification.new do |s|
   s.files = FileList["lib/**/*"].to_a
   s.require_path = "lib"
   s.has_rdoc = true
+  s.add_dependency('uuid', '2.0.1')
+  s.add_dependency('builder', '2.1.2')
 end
 
 Rake::GemPackageTask.new(spec) do |pkg| 
