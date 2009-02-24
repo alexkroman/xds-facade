@@ -4,7 +4,7 @@ module MIME
   # has a max line length of 1000. Since we will be getting SOAP repsonses
   # with out new lines, we will easily exceed that. This class produces
   # a MimeTokenStream with a longer max line length
-  class FixedMimeTokenStream < MimeTokenStream
+  class FixedMimeTokenStream < org.apache.james.mime4j.parser.MimeTokenStream
     def initialize()
       config = MimeEntityConfig.new
       config.max_line_len = 4096
