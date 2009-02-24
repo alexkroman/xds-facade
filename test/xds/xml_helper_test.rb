@@ -51,13 +51,13 @@ class XmlHelperTest < Test::Unit::TestCase
      
      
      should "be able to create an ExternalIdentiier" do
-         ei = create_external_identifier(create_builder,"scheme","schem_value")
-         assert_xpath(ei,"/ExternalIdentifier[@identificationScheme='scheme' and @value='schem_value']",{}, 1)
+         ei = create_external_identifier(create_builder,"my_id","my_reg_object","scheme","schem_value")
+         assert_xpath(ei,"/ExternalIdentifier[@id='my_id' and @registryObject='my_reg_object' and @identificationScheme='scheme' and @value='schem_value']",{}, 1)
      end
      
      
      should "be able to create an ExternalIdentiier with a block" do
-         ei = create_external_identifier(create_builder,"scheme","schem_value") do |builder|
+         ei = create_external_identifier(create_builder,"id","reg_obj", "scheme","schem_value") do |builder|
             create_slot(builder,"test_slot",["value1","value2"])
          end
          assert_xpath(ei,"/ExternalIdentifier[@identificationScheme='scheme' and @value='schem_value']",{}, 1)
