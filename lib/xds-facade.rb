@@ -4,10 +4,10 @@ if RUBY_PLATFORM =~ /java/
   require 'uuid'
   require 'java'
   
-  require 'lib/commons-codec-1.3.jar'
-  require 'lib/commons-logging-1.1.1.jar'
-  require 'lib/commons-httpclient-3.1.jar'
-  require 'lib/apache-mime4j-0.5.jar'
+  require File.expand_path(File.dirname(__FILE__) + '/commons-codec-1.3.jar')
+  require File.expand_path(File.dirname(__FILE__) + '/commons-logging-1.1.1.jar')
+  require File.expand_path(File.dirname(__FILE__) + '/commons-httpclient-3.1.jar')
+  require File.expand_path(File.dirname(__FILE__) + '/apache-mime4j-0.5.jar')
   
   import "org.apache.commons.httpclient.HttpClient"
   import "org.apache.commons.httpclient.methods.PostMethod"
