@@ -3,6 +3,7 @@ if RUBY_PLATFORM =~ /java/
   require 'builder'
   require 'uuid'
   require 'java'
+  require 'andand'
   
   require File.expand_path(File.dirname(__FILE__) + '/commons-codec-1.3.jar')
   require File.expand_path(File.dirname(__FILE__) + '/commons-logging-1.1.1.jar')
@@ -12,7 +13,10 @@ if RUBY_PLATFORM =~ /java/
   import "org.apache.commons.httpclient.HttpClient"
   import "org.apache.commons.httpclient.methods.PostMethod"
   import "org.apache.commons.httpclient.methods.StringRequestEntity"
-  
+  import "org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity"
+  import "org.apache.commons.httpclient.methods.multipart.Part"
+  import "org.apache.commons.httpclient.methods.multipart.StringPart"
+  import "org.apache.commons.httpclient.methods.multipart.FilePart"
   import "org.apache.james.mime4j.parser.MimeTokenStream"
   import "org.apache.james.mime4j.parser.MimeEntityConfig"
   
@@ -25,6 +29,7 @@ if RUBY_PLATFORM =~ /java/
   require File.expand_path(File.dirname(__FILE__) + '/xds/coded_attribute')
   require File.expand_path(File.dirname(__FILE__) + '/xds/metadata')
   require File.expand_path(File.dirname(__FILE__) + '/xds/source_patient_info')
+  require File.expand_path(File.dirname(__FILE__) + '/xds/provide_and_register_document_set_b')
   require File.expand_path(File.dirname(__FILE__) + '/xds/retrieve_document_set_request')
   require File.expand_path(File.dirname(__FILE__) + '/xds/retrieve_document_set_response')
   require File.expand_path(File.dirname(__FILE__) + '/xds/registry_stored_query_request')
@@ -42,4 +47,23 @@ module XDS
                        'xop' => "http://www.w3.org/2004/08/xop/include",
                        'query' => "urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0",
                        'rim' => 'urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0'}
+
+    
+ PROXY_CONFIG = begin
+     proxy_config = {}
+     host = ENV['xds_proxy'] || ENV['http_proxy']
+     if host
+         host.andand.gsub!("http://","")
+         host.andand.gsub!("https://","")
+     end
+     if host 
+        host = host.split(":")
+        proxy_config = {:host=>host[0],:port=>(host.length>1)?host[1].to_i : 80}        
+     end
+      proxy_config
+    end                       
+          
+  def self.proxy_config    
+       XDS::PROXY_CONFIG 
+  end                     
 end

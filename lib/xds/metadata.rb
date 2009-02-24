@@ -31,32 +31,30 @@ module XDS
     object_id = 'the_document'
 
       builder.RegistryObjectList do 
-        @author.to_soap(object_id)
-        @class_code.to_soap(object_id)
-        @confidentiality_code.to_soap(object_id)
+        @author.andand.to_soap(builder,object_id) 
         
-        create_slot(builder,'creationTime', creation_time.strftime('%Y%m%d'))
+        @class_code.andand.to_soap(builder,object_id) 
+        @confidentiality_code.andand.to_soap(builder,object_id)
         
-        @format_code.to_soap(object_id)
-        @healthcare_facility_type_code.to_soap(object_id)
+        create_slot(builder,'creationTime', @creation_time.strftime('%Y%m%d')) if @creation_time
         
-        create_slot(builder,'languageCode', @language_code)
+        @format_code.andand.to_soap(builder,object_id) 
+        @healthcare_facility_type_code.andand.to_soap(builder, object_id)
+        
+        create_slot(builder,'languageCode', @language_code) if @language_code
         create_extrinsic_object(builder,object_id,@mime_type,"")
         external_identiier(builder,:pateint_id)
 
-        @practice_setting_code.to_soap(build,object_id)
+        @practice_setting_code.andand.to_soap(builder,object_id)
 
-        if @service_start_time
-          create_slot(builder,'serviceStartTime', service_start_time.strftime('%Y%m%d'))
-        end
-        if @service_stop_time
-          create_slot(builder,'serviceStopTime', service_stop_time.strftime('%Y%m%d'))
-        end
+        
+        create_slot(builder,'serviceStartTime', @service_start_time.strftime('%Y%m%d')) if @service_start_time     
+        create_slot(builder,'serviceStopTime', @service_stop_time.strftime('%Y%m%d'))  if @service_stop_time
 
-        create_slot(builder,'sourcePatientId', source_patient_id)
+        create_slot(builder,'sourcePatientId', @source_patient_id) if @source_patient_id
 
-        @source_patient_info.to_soap(builer)
-        @type_code.to_soap(builder,object_id)
+        @source_patient_info.andand.to_soap(builer,object_id)
+        @type_code.andand.to_soap(builder,object_id)
         
         external_identiier(builder,:unique_id)
         
