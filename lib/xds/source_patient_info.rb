@@ -34,7 +34,7 @@ module XDS
           "PID-11|#{@address}"]
           
     end
-    
+
     def match_and_strip(slot_values, pid_segment)
       slot_value = slot_values.find {|field_value| field_value.match("^#{pid_segment}\\|.*")}
       if slot_value
@@ -44,5 +44,6 @@ module XDS
         return nil
       end
     end
+
   end
 end

@@ -2,7 +2,7 @@ module XDS
   class Metadata
     
     EXTERNAL_ID_SCHEMES={:patient_id=> {:scheme=>'urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427',
-                                     :value=>'patientId'},
+                                     :value=>'XDSDocumentEntry.patientId'},
                          :unique_id=>{:scheme=>'urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab',
                                       :value=>'XDSDocumentEntry.uniqueId'}
                          }
@@ -26,38 +26,72 @@ module XDS
     attr_accessor :type_code
     attr_accessor :unique_id
     attr_accessor :uri
+    attr_accessor :version_info
+    attr_accessor :id
+    
+    
 
     def to_soap(builder)
-    object_id = 'the_document'
+      @id="urn:uid:#{UUID.new.generate}" unless @id
 
-      builder.RegistryObjectList do 
-        @author.andand.to_soap(builder,object_id) 
-        
-        @class_code.andand.to_soap(builder,object_id) 
-        @confidentiality_code.andand.to_soap(builder,object_id)
-        
-        create_slot(builder,'creationTime', @creation_time.strftime('%Y%m%d')) if @creation_time
-        
-        @format_code.andand.to_soap(builder,object_id) 
-        @healthcare_facility_type_code.andand.to_soap(builder, object_id)
-        
-        create_slot(builder,'languageCode', @language_code) if @language_code
-        create_extrinsic_object(builder,object_id,@mime_type,"")
-        external_identiier(builder,:pateint_id)
+      builder.RegistryObjectList("xmlns"=>"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0") do 
+         create_extrinsic_object(builder,@id,@mime_type,"urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1") do
+          
+          create_slot(builder,'languageCode', @language_code) if @language_code
+          create_slot(builder,'creationTime', @creation_time.strftime('%Y%m%d')) if @creation_time
+          create_slot(builder,'serviceStartTime', @service_start_time.strftime('%Y%m%d')) if @service_start_time     
+          create_slot(builder,'serviceStopTime', @service_stop_time.strftime('%Y%m%d'))  if @service_stop_time
 
-        @practice_setting_code.andand.to_soap(builder,object_id)
+          create_slot(builder,'sourcePatientId', @source_patient_id) if @source_patient_id
+          @source_patient_info.andand.to_soap(builder)
+          
+          @version_info.to_soap(builder) if @version_info
+          @author.andand.to_soap(builder,@id)       
+          @class_code.andand.to_soap(builder,@id) 
+          @confidentiality_code.andand.to_soap(builder,@id)     
+          @format_code.andand.to_soap(builder,@id) 
+          @healthcare_facility_type_code.andand.to_soap(builder, @id)         
+          
+          @practice_setting_code.andand.to_soap(builder,@id)
+          
+          @type_code.andand.to_soap(builder,@id)
 
+          external_identifier(builder,:patient_id)
+          external_identifier(builder,:unique_id)
+        end
+       
+        builder.RegistryPackage(:id=>"ss01",:objectType=>"urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:RegistryPackage") do
+          create_slot(builder,"submissionTime",Time.now.strftime('%Y%m%d'))
+     
+          create_classification(builder,"urn:uuid:aa543740-bdda-424e-8c96-df4873be8500","ss01","Initial evaluation","cl01") do
+            create_slot(builder,"codingScheme","Connect-a-thon contentTypeCodes")
+            create_name(builder,"Initial evaluation")
+          end
+              
+          create_external_identifier(builder,"urn:uid:#{UUID.new.generate}","ss01","urn:uuid:96fdda7c-d067-4183-912e-bf5ee74998a8","1.2.3.4.5.6.7.8.9.10")  do |build|
+            create_name(builder,"XDSSubmissionSet.uniqueId")
+          end
+          
+          create_external_identifier(builder,"urn:uid:#{UUID.new.generate}","ss01","urn:uuid:554ac39e-e3fe-47fe-b233-965d2a147832","1.3.6.1.4.1.21367.2009.1.2.1")  do |build|
+            create_name(builder,"XDSSubmissionSet.sourceId")
+          end
+          
+          create_external_identifier(builder,"urn:uid:#{UUID.new.generate}","ss01","urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427",@source_patient_info.source_patient_identifier)  do |build|
+            create_name(builder,"XDSDocumentEntry.patientId")
+          end
+          
+          create_external_identifier(builder,"urn:uid:#{UUID.new.generate}","ss01","urn:uuid:6b5aea1a-874d-4603-a4bc-96a0a7b38446",@source_patient_info.source_patient_identifier)  do |build|
+            create_name(builder,"XDSSubmissionSet.patientId")
+          end
+          
+          
+        end
+        builder.Classification(:id=>"ss01_class_id",:classificationScheme=>"urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd",:classificationNode=>"urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd",:classifiedObject=>"ss01")
         
-        create_slot(builder,'serviceStartTime', @service_start_time.strftime('%Y%m%d')) if @service_start_time     
-        create_slot(builder,'serviceStopTime', @service_stop_time.strftime('%Y%m%d'))  if @service_stop_time
-
-        create_slot(builder,'sourcePatientId', @source_patient_id) if @source_patient_id
-
-        @source_patient_info.andand.to_soap(builer,object_id)
-        @type_code.andand.to_soap(builder,object_id)
         
-        external_identiier(builder,:unique_id)
-        
+       builder.Association(:id=>"ass_01",:associationType=>"HasMember",:sourceObject=>"ss01",:targetObject=>@id) do
+            create_slot(builder,"SubmissionSetStatus","Original")
+        end
       end
     end
     
@@ -105,10 +139,10 @@ module XDS
     end
 
     def external_identifier(builder,name)
-      EXTERNAL_ID_SCHEMES[name]
+      ei_params = EXTERNAL_ID_SCHEMES[name]
       if ei_params
-        create_external_identifier(build,ei_params[:scheme],ei_params[:value])  do |build|
-          create_name(builder,self.send(name))
+        create_external_identifier(builder,"urn:uid:#{UUID.new.generate}",@id,ei_params[:scheme],self.send(name))  do |build|
+          create_name(builder,ei_params[:value])
         end
       end
     end

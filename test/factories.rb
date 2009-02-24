@@ -6,7 +6,7 @@ Factory.define(:author, :class => XDS::Author) do |a|
 end
 
 Factory.define(:source_patient_info, :class => XDS::SourcePatientInfo) do |s|
-  s.source_patient_identifier('6578946^^^&amp;1.3.6.1.4.1.21367.2005.3.7&amp;ISO')
+  s.source_patient_identifier('1825a09e14144fc^^^&1.19.6.24.109.42.1.3&ISO')
   s.name('STEPHEN^COLBERT^^^')
   s.date_of_birth(Time.now)
   s.gender('M')
@@ -22,7 +22,7 @@ Factory.define(:metadata, :class => XDS::Metadata) do |m|
   m.healthcare_facility_type_code(XDS::CodedAttribute.new(:healthcare_facility_type_code, 'Hospital Unit', 'Hospital Unit', 'Connect-a-thon healthcareFacilityTypeCodes'))
   m.language_code('en-us')
   m.mime_type('text/xml')
-  m.patient_id('6578946^^^&amp;1.3.6.1.4.1.21367.2005.3.7&amp;ISO')
+  m.patient_id('1825a09e14144fc^^^&1.19.6.24.109.42.1.3&ISO')
   m.practice_setting_code(XDS::CodedAttribute.new(:practice_setting_code, 'Laboratory', 'Laboratory', 'Connect-a-thon practiceSettingCodes'))
   m.source_patient_id('1234^^^projectlaika.org')
   m.source_patient_info(Factory.build(:source_patient_info))

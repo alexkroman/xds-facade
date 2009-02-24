@@ -25,8 +25,8 @@ module XDS
     
     def to_soap(builder, object_id)      
       create_classification(builder,@classification_scheme,object_id,@code) do |build|
-        create_name(build,@display_name)
         create_slot(build,"codingScheme",@coding_scheme || [])
+        create_name(build,@display_name)        
       end
     end
     

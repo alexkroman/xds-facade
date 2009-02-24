@@ -8,9 +8,9 @@ module XDS
       end
     end
     
-    def create_external_identifier(builder,scheme, value, &block)
+    def create_external_identifier(builder,id,reg_object,scheme, value, &block)
       
-      builder.ExternalIdentifier("identificationScheme"=>scheme,"value"=>value) do
+      builder.ExternalIdentifier("id"=>id,"registryObject"=>reg_object,"identificationScheme"=>scheme,"value"=>value) do
         yield builder if block_given?
       end
     end
@@ -36,10 +36,12 @@ module XDS
       end
     end
     
-    def create_classification(builder,scheme, classified_object,node_rep ,&block)
+    def create_classification(builder,scheme, classified_object,node_rep ,id=UUID.new.generate,&block)
       builder.Classification("classificationScheme"=>scheme, 
                              "classifiedObject"=>classified_object,
-                             "nodeRepresentation"=>node_rep) do
+                             "nodeRepresentation"=>node_rep,
+                             "id"=>id) do
+                      
           yield builder if block_given?
       end
     end

@@ -26,6 +26,7 @@ module XDS
     end
     
     def to_soap(builder = Builder::XmlMarkup.new(:indent => 2),attributes={})
+      builder.instruct!
       builder.soapenv(:Envelope, 
                     "xmlns:soapenv" => "http://www.w3.org/2003/05/soap-envelope",
                      "xmlns"=>"http://www.w3.org/2003/05/soap-envelope",
