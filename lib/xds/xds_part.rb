@@ -1,19 +1,19 @@
 module XDS
   import "org.apache.commons.httpclient.util.EncodingUtil"
-  CRLF_BYTES = EncodingUtil.getAsciiBytes("\r\n");
+  CRLF_BYTES = org.apache.commons.httpclient.util.EncodingUtil.getAsciiBytes("\r\n");
 
   class XdsPart < org.apache.commons.httpclient.methods.multipart.StringPart
     
     attr_accessor :id
     
     def length
-      super + XDS::CRLF_BYTES.length + EncodingUtil.get_ascii_bytes(get_id).length
+      super + XDS::CRLF_BYTES.length + org.apache.commons.httpclient.util.EncodingUtil.get_ascii_bytes(get_id).length
     end
     
     
     def send_id(out)
       out.write(XDS::CRLF_BYTES)
-      out.write(EncodingUtil.get_ascii_bytes(get_id))     
+      out.write(org.apache.commons.httpclient.util.EncodingUtil.get_ascii_bytes(get_id))     
     end
     
     # /***

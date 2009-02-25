@@ -20,6 +20,7 @@ if RUBY_PLATFORM =~ /java/
   import "org.apache.commons.httpclient.methods.multipart.FilePart"
   import "org.apache.james.mime4j.parser.MimeTokenStream"
   import "org.apache.james.mime4j.parser.MimeEntityConfig"
+  import "org.apache.commons.httpclient.util.EncodingUtil"
   
   require File.expand_path(File.dirname(__FILE__) + '/mime/mime_message_parser')
 
