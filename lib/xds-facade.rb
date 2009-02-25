@@ -4,6 +4,7 @@ if RUBY_PLATFORM =~ /java/
   require 'uuid'
   require 'java'
   require 'andand'
+  require 'rexml/document'
   
   require File.expand_path(File.dirname(__FILE__) + '/commons-codec-1.3.jar')
   require File.expand_path(File.dirname(__FILE__) + '/commons-logging-1.1.1.jar')
@@ -33,6 +34,7 @@ if RUBY_PLATFORM =~ /java/
   require File.expand_path(File.dirname(__FILE__) + '/xds/xds_request_entity')
   require File.expand_path(File.dirname(__FILE__) + '/xds/provide_and_register_document_set_b')
   require File.expand_path(File.dirname(__FILE__) + '/xds/provide_and_register_document_set_b_xop')
+  require File.expand_path(File.dirname(__FILE__) + '/xds/provide_and_register_document_set_b_xop_response')
   require File.expand_path(File.dirname(__FILE__) + '/xds/retrieve_document_set_request')
   require File.expand_path(File.dirname(__FILE__) + '/xds/retrieve_document_set_response')
   require File.expand_path(File.dirname(__FILE__) + '/xds/registry_stored_query_request')

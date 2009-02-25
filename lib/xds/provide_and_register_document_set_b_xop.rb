@@ -44,6 +44,8 @@ module XDS
         post.content_chunked=true
         client.executeMethod(post)
         post
+        XDS::ProvideAndRegisterDocumentSetBXopResponse.new(self,post)
+       
     end
     
     private 

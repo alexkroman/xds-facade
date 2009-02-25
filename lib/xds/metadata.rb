@@ -28,6 +28,8 @@ module XDS
     attr_accessor :uri
     attr_accessor :version_info
     attr_accessor :id
+    attr_accessor :ss_unique_id
+    attr_accessor :source_id
     
     
 
@@ -68,19 +70,19 @@ module XDS
             create_name(builder,"Initial evaluation")
           end
               
-          create_external_identifier(builder,"urn:uid:#{UUID.new.generate}","ss01","urn:uuid:96fdda7c-d067-4183-912e-bf5ee74998a8","1.2.3.4.5.6.7.8.9.10")  do |build|
+          create_external_identifier(builder,"ss_ei_01","ss01","urn:uuid:96fdda7c-d067-4183-912e-bf5ee74998a8",ss_unique_id)  do |build|
             create_name(builder,"XDSSubmissionSet.uniqueId")
           end
           
-          create_external_identifier(builder,"urn:uid:#{UUID.new.generate}","ss01","urn:uuid:554ac39e-e3fe-47fe-b233-965d2a147832","1.3.6.1.4.1.21367.2009.1.2.1")  do |build|
+          create_external_identifier(builder,"ss_ei_02","ss01","urn:uuid:554ac39e-e3fe-47fe-b233-965d2a147832",source_id)  do |build|
             create_name(builder,"XDSSubmissionSet.sourceId")
           end
           
-          create_external_identifier(builder,"urn:uid:#{UUID.new.generate}","ss01","urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427",@source_patient_info.source_patient_identifier)  do |build|
+          create_external_identifier(builder,"ss_ei_03","ss01","urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427",@source_patient_info.source_patient_identifier)  do |build|
             create_name(builder,"XDSDocumentEntry.patientId")
           end
           
-          create_external_identifier(builder,"urn:uid:#{UUID.new.generate}","ss01","urn:uuid:6b5aea1a-874d-4603-a4bc-96a0a7b38446",@source_patient_info.source_patient_identifier)  do |build|
+          create_external_identifier(builder,"ss_ei_04","ss01","urn:uuid:6b5aea1a-874d-4603-a4bc-96a0a7b38446",@source_patient_info.source_patient_identifier)  do |build|
             create_name(builder,"XDSSubmissionSet.patientId")
           end
           

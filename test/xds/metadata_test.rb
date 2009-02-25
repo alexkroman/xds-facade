@@ -6,9 +6,29 @@ class MetadataTest < Test::Unit::TestCase
   context "Metadata" do
     setup do
       response_xml = REXML::Document.new(File.read(File.expand_path(File.dirname(__FILE__) + '/../data/query_response.xml')))
-            namespaces = {'query' => "urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0", 'rim' => 'urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0'}.merge(common_namespaces)
-      @eo_node = REXML::XPath.first(response_xml, '/soapenv:Envelope/soapenv:Body/query:AdhocQueryResponse/rim:RegistryObjectList/rim:ExtrinsicObject', namespaces)
+            @namespaces = {'query' => "urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0", 'rim' => 'urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0'}.merge(common_namespaces)
+      @eo_node = REXML::XPath.first(response_xml, '/soapenv:Envelope/soapenv:Body/query:AdhocQueryResponse/rim:RegistryObjectList/rim:ExtrinsicObject', @namespaces)
+      @building_namespaces = {'xmlns:query' => "urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0", 'xmlns:rim' => 'urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0'}.merge(common_namespaces_for_building)
     end
+    
+    should "be able to serialize to soap " do
+      metadata = Factory.build(:metadata)
+      builder =create_builder
+      xml = metadata.to_soap(builder)
+      assert_xpath(xml, "/rim:RegistryObjectList/rim:ExtrinsicObject", @namespaces,1)
+      
+      assert_xpath(xml, "/rim:RegistryObjectList/rim:RegistryPackage", @namespaces,1)
+      assert_xpath(xml, "/rim:RegistryObjectList/rim:RegistryPackage/rim:ExternalIdentifier[@identificationScheme='urn:uuid:96fdda7c-d067-4183-912e-bf5ee74998a8']", @namespaces,1)
+      assert_xpath(xml, "/rim:RegistryObjectList/rim:RegistryPackage/rim:ExternalIdentifier[@identificationScheme='urn:uuid:554ac39e-e3fe-47fe-b233-965d2a147832']", @namespaces,1)
+      assert_xpath(xml, "/rim:RegistryObjectList/rim:RegistryPackage/rim:ExternalIdentifier[@identificationScheme='urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427']", @namespaces,1)
+      assert_xpath(xml, "/rim:RegistryObjectList/rim:RegistryPackage/rim:ExternalIdentifier[@identificationScheme='urn:uuid:6b5aea1a-874d-4603-a4bc-96a0a7b38446']", @namespaces,1)
+      
+      assert_xpath(xml, "/rim:RegistryObjectList/rim:Classification[@classificationNode='urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd' and @classifiedObject=/rim:RegistryObjectList/rim:RegistryPackage/@id]", @namespaces,1)
+      
+      assert_xpath(xml, "/rim:RegistryObjectList/rim:Association[@associationType='HasMember' and @sourceObject=/rim:RegistryObjectList/rim:RegistryPackage/@id]/rim:Slot[@name='SubmissionSetStatus']", @namespaces,1)
+      
+    end
+    
     
     should "be able to populate values from an ExtrinsicObject node" do
       metadata = XDS::Metadata.new
