@@ -1,7 +1,13 @@
 module XDS
-  class ProvideAndRegisterDocumentSetBXop < ProvideAndRegisterDocumentSetB
+  class ProvideAndRegisterDocumentSetBXop < MTOMXopRequest
   
+     def initialize(service_url,metadata,document)
+           super(service_url,"urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b")
+           @metadata = metadata
+           @document = document
+       end                    
 
+     
        def to_soap_body(builder, attributes={}) 
        @metadata.id = "urn:uid:#{UUID.new.generate}" unless @metadata.id  
        builder.soapenv(:Body, attributes) do
@@ -25,27 +31,21 @@ module XDS
      
      
     def execute
-        client = create_client
-        post = PostMethod.new(endpoint_uri)
-        body_part =  XdsPart.new("body", to_soap)
-        body_part.char_set="UTF-8"
-        body_part.id = get_body_part_id
-        body_part.set_content_type(%{application/xop+xml; type="application/soap+xml"})
-        document_part = XdsPart.new("document",@document.to_s)   
-        document_part.char_set="UTF-8"
-        document_part.id=get_document_part_id       
-        parts = [body_part,document_part].to_java(Part)
-        ent = XdsRequestEntity.new(parts, post.get_params)
-        ent.type="application/xop+xml"
-        ent.start=get_body_part_id
-        ent.start_info="application/soap+xml"
-        ent.action="urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b"
-        post.set_request_entity(ent)
-        post.content_chunked=true
-        client.executeMethod(post)
-        post
-        XDS::ProvideAndRegisterDocumentSetBXopResponse.new(self,post)
-       
+        post = super
+        puts post.get_response_body_as_string
+        XDS::ProvideAndRegisterDocumentSetBXopResponse.new(self,post)     
+    end
+    
+    def get_parts
+      body_part =  XdsPart.new("body", to_soap)
+      body_part.char_set="UTF-8"
+      body_part.id = get_body_part_id
+      body_part.set_content_type(%{application/xop+xml; type="application/soap+xml"})
+     
+      document_part = XdsPart.new("document",@document.to_s)   
+      document_part.char_set="UTF-8"
+      document_part.id=get_document_part_id       
+      [body_part,document_part]
     end
     
     private 

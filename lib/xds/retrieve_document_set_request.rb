@@ -1,5 +1,5 @@
 module XDS
-  class RetrieveDocumentSetRequest < XdsRequest
+  class RetrieveDocumentSetRequest < MTOMXopRequest
     
     def initialize(service_url, doc_ids = [])
       super(service_url,"urn:ihe:iti:2007:RetrieveDocumentSet")
@@ -38,6 +38,15 @@ module XDS
         return false
       end
     end
+    
+    def get_parts
+     body_part =  XdsPart.new("body", to_soap)
+     body_part.char_set="UTF-8"
+     body_part.id = UUID.new.generate
+     body_part.set_content_type(%{application/xop+xml; type="application/soap+xml"})   
+     [body_part]
+    end
+    
     
     def to_soap_body(builder,body_attributes = {})
       builder.soapenv(:Body, body_attributes) do

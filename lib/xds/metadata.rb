@@ -91,7 +91,7 @@ module XDS
         builder.Classification(:id=>"ss01_class_id",:classificationScheme=>"urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd",:classificationNode=>"urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd",:classifiedObject=>"ss01")
         
         
-       builder.Association(:id=>"ass_01",:associationType=>"HasMember",:sourceObject=>"ss01",:targetObject=>@id) do
+       builder.Association(:id=>"ass_01",:associationType=>"urn:oasis:names:tc:ebxml-regrep:AssociationType:HasMember",:sourceObject=>"ss01",:targetObject=>@id) do
             create_slot(builder,"SubmissionSetStatus","Original")
         end
       end
