@@ -32,7 +32,6 @@ module XDS
      
     def execute
         post = super
-        puts post.get_response_body_as_string
         XDS::ProvideAndRegisterDocumentSetBXopResponse.new(self,post)     
     end
     

@@ -25,7 +25,7 @@ class MetadataTest < Test::Unit::TestCase
       
       assert_xpath(xml, "/rim:RegistryObjectList/rim:Classification[@classificationNode='urn:uuid:a54d6aa5-d40d-43f9-88c5-b4633d873bdd' and @classifiedObject=/rim:RegistryObjectList/rim:RegistryPackage/@id]", @namespaces,1)
       
-      assert_xpath(xml, "/rim:RegistryObjectList/rim:Association[@associationType='HasMember' and @sourceObject=/rim:RegistryObjectList/rim:RegistryPackage/@id]/rim:Slot[@name='SubmissionSetStatus']", @namespaces,1)
+      assert_xpath(xml, "/rim:RegistryObjectList/rim:Association[@associationType='urn:oasis:names:tc:ebxml-regrep:AssociationType:HasMember' and @sourceObject=/rim:RegistryObjectList/rim:RegistryPackage/@id]/rim:Slot[@name='SubmissionSetStatus']", @namespaces,1)
       
     end
     
