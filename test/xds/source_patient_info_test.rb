@@ -13,7 +13,7 @@ class SourcePatientInfoTest < Test::Unit::TestCase
       name = "name"
       spi = "spi"
       gender="manlyman"
-      dob = Time.now
+      dob = Time.now.strftime('%Y%m%d')
       addr = "penny lane"
       
       p = XDS::SourcePatientInfo.new(:name=>name,
@@ -25,7 +25,7 @@ class SourcePatientInfoTest < Test::Unit::TestCase
       soap = p.to_soap(create_builder)
       assert_xpath(soap,"/Slot[@name='sourcePatientInfo']/ValueList/Value[text() = 'PID-5|#{name}']")
       assert_xpath(soap,"/Slot[@name='sourcePatientInfo']/ValueList/Value[text() = 'PID-8|#{gender}']")
-      assert_xpath(soap,"/Slot[@name='sourcePatientInfo']/ValueList/Value[text() = 'PID-7|#{dob.strftime('%Y%m%d')}']")
+      assert_xpath(soap,"/Slot[@name='sourcePatientInfo']/ValueList/Value[text() = 'PID-7|#{dob}']")
       assert_xpath(soap,"/Slot[@name='sourcePatientInfo']/ValueList/Value[text() = 'PID-11|#{addr}']")
       assert_xpath(soap,"/Slot[@name='sourcePatientInfo']/ValueList/Value[text() = 'PID-3|#{spi}']")
     end
@@ -52,7 +52,7 @@ class SourcePatientInfoTest < Test::Unit::TestCase
       assert_equal 'Doe^John^^^', patient_info.name
       assert_equal 'M', patient_info.gender
       assert_equal '100 Main St^^Metropolis^Il^44130^USA', patient_info.address
-      assert_equal Date.new(1956, 5, 27), patient_info.date_of_birth
+      assert_equal "19560527", patient_info.date_of_birth
     end
   end
 

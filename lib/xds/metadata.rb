@@ -40,9 +40,9 @@ module XDS
          create_extrinsic_object(builder,@id,@mime_type,"urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1") do
           
           create_slot(builder,'languageCode', @language_code) if @language_code
-          create_slot(builder,'creationTime', @creation_time.strftime('%Y%m%d')) if @creation_time
-          create_slot(builder,'serviceStartTime', @service_start_time.strftime('%Y%m%d')) if @service_start_time     
-          create_slot(builder,'serviceStopTime', @service_stop_time.strftime('%Y%m%d'))  if @service_stop_time
+          create_slot(builder,'creationTime', @creation_time) if @creation_time
+          create_slot(builder,'serviceStartTime', @service_start_time) if @service_start_time     
+          create_slot(builder,'serviceStopTime', @service_stop_time)  if @service_stop_time
 
           create_slot(builder,'sourcePatientId', @source_patient_id) if @source_patient_id
           @source_patient_info.andand.to_soap(builder)

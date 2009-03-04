@@ -21,8 +21,7 @@ module XDS
       @source_patient_identifier = match_and_strip(patient_values, 'PID-3')
       @name = match_and_strip(patient_values, 'PID-5')
       @gender = match_and_strip(patient_values, 'PID-8')
-      date_of_birth_hl7 = match_and_strip(patient_values, 'PID-7')
-      @date_of_birth = Date.strptime(date_of_birth_hl7, '%Y%m%d')
+      @date_of_birth = match_and_strip(patient_values, 'PID-7')
       @address = match_and_strip(patient_values, 'PID-11')
     end
     
@@ -30,7 +29,7 @@ module XDS
       ["PID-3|#{@source_patient_identifier}", 
           "PID-5|#{@name}",
           "PID-8|#{@gender}",
-          "PID-7|#{@date_of_birth.strftime('%Y%m%d')}",
+          "PID-7|#{@date_of_birth}",
           "PID-11|#{@address}"]
           
     end
