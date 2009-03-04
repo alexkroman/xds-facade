@@ -107,8 +107,8 @@ module XDS
       @confidentiality_code = CodedAttribute.new(:confidentiality_code)
       @confidentiality_code.from_extrinsic_object(eo_node)
       
-      creation_time_in_hl7ts = get_slot_value(eo_node, 'creationTime')
-      @creation_time = Date.strptime(creation_time_in_hl7ts, '%Y%m%d') if creation_time_in_hl7ts
+      
+      @creation_time = get_slot_value(eo_node, 'creationTime')
 
       @format_code = CodedAttribute.new(:format_code)
       @format_code.from_extrinsic_object(eo_node)
@@ -124,10 +124,9 @@ module XDS
       @practice_setting_code = CodedAttribute.new(:practice_setting_code)
       @practice_setting_code.from_extrinsic_object(eo_node)
       
-      service_start_time_in_hl7ts = get_slot_value(eo_node, 'serviceStartTime')
-      @service_start_time = Date.strptime(service_start_time_in_hl7ts, '%Y%m%d') if service_start_time_in_hl7ts
-      service_stop_time_in_hl7ts = get_slot_value(eo_node, 'serviceStopTime')
-      @service_stop_time = Date.strptime(service_stop_time_in_hl7ts, '%Y%m%d') if service_stop_time_in_hl7ts
+
+      @service_start_time = get_slot_value(eo_node, 'serviceStartTime')
+      @service_stop_time = get_slot_value(eo_node, 'serviceStopTime')
 
       @source_patient_info = SourcePatientInfo.new
       @source_patient_info.from_extrinsic_object(eo_node)
