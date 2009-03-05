@@ -44,5 +44,17 @@ class MetadataTest < Test::Unit::TestCase
       assert_equal '93f3f8a6d100463^^^&1.3.6.1.4.1.21367.2005.3.7&ISO', metadata.patient_id
       assert_equal 'pid1^^^domain', metadata.source_patient_info.source_patient_identifier
     end
+    
+    should "be able to load from a hash" do
+      metadata = XDS::Metadata.new
+      adc = XDS::AffinityDomainConfig.new(File.expand_path(File.dirname(__FILE__) + '/../data/affinity_domain_config.xml'))
+      hash = {'author' => {'person' => 'steve'}, 'practice_setting_code' => 'Anesthesia', 'repository_unique_id' => '1.2.3.4'}
+      metadata.from_hash(hash, adc)
+      assert_equal 'steve', metadata.author.person
+      assert metadata.practice_setting_code
+      assert_equal 'urn:uuid:cccf5598-8b07-4b77-a05e-ae952c785ead', metadata.practice_setting_code.classification_scheme
+      assert_equal 'Anesthesia', metadata.practice_setting_code.display_name
+      assert_equal '1.2.3.4', metadata.repository_unique_id
+    end
   end
 end

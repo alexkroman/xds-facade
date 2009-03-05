@@ -140,6 +140,34 @@ module XDS
       @repository_unique_id = get_slot_value(eo_node,"repositoryUniqueId")
     end
 
+    def from_hash(hash, affinity_domain_config)
+      if hash['author']
+        @author = Author.new(hash['author']['institution'], hash['author']['person'], hash['author']['role'], hash['author']['specialty'])
+      end
+      @availibility_status = hash['availibility_status']
+      @class_code = affinity_domain_config.coded_attribute(:class_code, hash['class_code'])
+      @confidentiality_code = affinity_domain_config.coded_attribute(:confidentiality_code, hash['confidentiality_code'])
+      @creation_time = hash['creation_time']
+      @format_code = affinity_domain_config.coded_attribute(:format_code, hash['format_code'])
+      @healthcare_facility_type_code = affinity_domain_config.coded_attribute(:healthcare_facility_type_code, hash['healthcare_facility_type_code'])
+      @language_code = affinity_domain_config.coded_attribute(:language_code, hash['language_code'])
+      @mime_type = hash['mime_type']
+      @patient_id = hash['patient_id']
+      @practice_setting_code = affinity_domain_config.coded_attribute(:practice_setting_code, hash['practice_setting_code'])
+      @service_start_time = hash['service_start_time']
+      @service_stop_time = hash['service_stop_time']
+      @source_pateint_id = hash['source_pateint_id']
+      @source_patient_info = SourcePatientInfo.new(hash['source_patient_info']) if hash['source_patient_info']
+      @type_code = affinity_domain_config.coded_attribute(:type_code, hash['type_code'])
+      @id = hash['unique_id']
+      @uri = hash['uri']
+      @version_info = hash['version_info']
+      @id = hash['id']
+      @ss_unique_id = hash['ss_unique_id']
+      @source_id = hash['source_id']
+      @repository_unique_id = hash['repository_unique_id']
+    end
+
     def external_identifier(builder,name)
       ei_params = EXTERNAL_ID_SCHEMES[name]
       if ei_params
