@@ -30,7 +30,7 @@ module XDS
     attr_accessor :id
     attr_accessor :ss_unique_id
     attr_accessor :source_id
-    
+    attr_accessor :repository_unique_id
     
 
     def to_soap(builder)
@@ -137,6 +137,7 @@ module XDS
       @type_code.from_extrinsic_object(eo_node)
       @unique_id = get_external_identifier_value(eo_node, EXTERNAL_ID_SCHEMES[:unique_id][:scheme])
       @uri = get_slot_value(eo_node, 'URI')
+      @repository_unique_id = get_slot_value(eo_node,"repositoryUniqueId")
     end
 
     def external_identifier(builder,name)

@@ -22,6 +22,7 @@ class RegistryStoredQueryResponseTest < Test::Unit::TestCase
       md = rmd.first
       assert_equal '^Smitty^Gerald^^^', md.author.person
       assert_equal 'Connect-a-thon classCodes', md.class_code.coding_scheme
+      assert_equal '1.19.6.24.109.42.1.5', md.repository_unique_id
     end
   end
 end
