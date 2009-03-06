@@ -38,7 +38,11 @@ module XDS
       slot_value = slot_values.find {|field_value| field_value.match("^#{pid_segment}\\|.*")}
       if slot_value
         md = slot_value.match("^#{pid_segment}\\|(.+)")
-        return md[1]
+        if md
+          return md[1]
+        else
+          return nil
+        end
       else
         return nil
       end
