@@ -159,10 +159,9 @@ module XDS
       @source_pateint_id = hash['source_pateint_id']
       @source_patient_info = SourcePatientInfo.new(hash['source_patient_info']) if hash['source_patient_info']
       @type_code = affinity_domain_config.coded_attribute(:type_code, hash['type_code'])
-      @id = hash['unique_id']
+      @unique_id = hash['unique_id']
       @uri = hash['uri']
       @version_info = hash['version_info']
-      @id = hash['id']
       @ss_unique_id = hash['ss_unique_id']
       @source_id = hash['source_id']
       @repository_unique_id = hash['repository_unique_id']
