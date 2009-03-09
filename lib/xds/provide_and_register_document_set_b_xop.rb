@@ -1,4 +1,5 @@
 module XDS
+  require 'base64'
   class ProvideAndRegisterDocumentSetBXop < MTOMXopRequest
   
      def initialize(service_url,metadata,document)
@@ -20,9 +21,7 @@ module XDS
                
              end
 
-             builder.xdsb(:Document, "id"=>@metadata.id) do
-                builder.Include("href"=>get_document_part_id, "xmlns"=>"http://www.w3.org/2004/08/xop/include")
-             end
+             builder.xdsb(:Document, {"id"=>@metadata.id}, Base64.b64encode(@document) ) 
 
          end
        end
@@ -40,11 +39,11 @@ module XDS
       body_part.char_set="UTF-8"
       body_part.id = get_body_part_id
       body_part.set_content_type(%{application/xop+xml; type="application/soap+xml"})
-     
-      document_part = XdsPart.new("document",@document.to_s)   
-      document_part.char_set="UTF-8"
-      document_part.id=get_document_part_id       
-      [body_part,document_part]
+      [body_part]
+      #document_part = XdsPart.new("document",@document.to_s)   
+     # document_part.char_set="UTF-8"
+     # document_part.id=get_document_part_id       
+     # [body_part,document_part]
     end
     
     private 
