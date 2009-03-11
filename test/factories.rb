@@ -30,7 +30,7 @@ Factory.define(:metadata, :class => XDS::Metadata) do |m|
   m.source_patient_id('1234^^^projectlaika.org')
   m.source_patient_info(Factory.build(:source_patient_info))
   m.type_code(XDS::CodedAttribute.new(:type_code, '28570-0', 'Procedure Note', 'LOINC'))
-  m.unique_id("1.3.6.1.4.1.21367.2005.3.7^#{Time.now.to_i}")
+  m.unique_id("1.3.6.1.4.1.21367.2005.3.7#{Time.now.to_i}")
   m.ss_unique_id("1.3.6.1.4.1.21367.2009.1.2.1.#{Time.now.to_i}")
   m.source_id("1.3.6.1.4.1.21367.2009.1.2.1")
   
