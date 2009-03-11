@@ -20,9 +20,7 @@ module XDS
                  @metadata.to_soap(builder)
                
              end
-
              builder.xdsb(:Document, {"id"=>@metadata.id}, Base64.b64encode(@document) ) 
-
          end
        end
      end                 
