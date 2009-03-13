@@ -25,7 +25,9 @@ module XDS
       if rdsr.request_successful?
         docs = []
         rdsr.retrieved_documents.each do |rd|
-          part = parts.find {|candidate_part| candidate_part[:content_id].eql?('<' + rd[:content_id] + '>')}
+          # hacky yes!, if rd has a content_id that means the response sent the document back as a separate entry in the multipart doc
+          # else it sent it back as a base64 encoded string that has already been parsed by the rd object and set in :content of the returned hash
+          part = rd[:content_id] ? parts.find {|candidate_part| candidate_part[:content_id].eql?('<' + rd[:content_id] + '>')} : rd
           doc = {}
           doc[:repository_unique_id] = rd[:repository_unique_id]
           doc[:document_unique_id] = rd[:document_unique_id]

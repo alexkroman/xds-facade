@@ -4,6 +4,7 @@ class RetrieveDocumentSetResponseTest < Test::Unit::TestCase
   context "A RetrieveDocumentSetRequest" do
     setup do
       @successful_request_xml = File.read(File.expand_path(File.dirname(__FILE__) + '/../data/successful_document_set_response.xml'))
+      @successful_embedded_request_xml = File.read(File.expand_path(File.dirname(__FILE__) + '/../data/successful_document_set_response_embedded.xml'))
     end
     
     should 'properly set the response status for a successful request' do
@@ -23,6 +24,20 @@ class RetrieveDocumentSetResponseTest < Test::Unit::TestCase
       assert_equal "1.urn:uuid:3BE45FAC62CF0568A81199380869990@apache.org", rd[:content_id]
       assert_equal '1.19.6.24.109.42.1', rd[:repository_unique_id]
       assert_equal '1.2.3.4.100000022002209036.1196211173506.1', rd[:document_unique_id]
+    end
+    
+    should "properly parse oout information and document content from embeeded response" do
+      
+      rdsr = XDS::RetrieveDocumentSetResponse.new
+      rdsr.parse_soap_response(@successful_embedded_request_xml)
+      assert rdsr.request_successful?
+      rds = rdsr.retrieved_documents
+      assert rds
+      assert_equal 1, rds.length
+      rd = rds.first
+      assert  rd[:content]
+      assert_equal '1.19.6.24.109.42.1.1', rd[:repository_unique_id]
+      assert_equal '1.2.3.4321.1234', rd[:document_unique_id]
     end
   end
 end
